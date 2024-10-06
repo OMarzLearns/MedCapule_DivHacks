@@ -3,8 +3,6 @@ import numpy as np
 from spectra import rgb
 import time, easyocr, cv2, webcolors
 
-
-# Load a pre-trained model (e.g., MobileNetV2)
 # 3 inputs: color, shape, text
 
 
@@ -67,15 +65,15 @@ def capture_image():
 
     return frame
 
-def get_color_name(rgb_tuple):
-    try:
-        # Convert RGB to hex
-        hex_value = webcolors.rgb_to_hex(rgb_tuple)
-        # Get the color name directly
-        return webcolors.hex_to_name(hex_value)
-    except ValueError:
-        # If exact match not found, find the closest color
-        return closest_color(rgb_tuple)
+# def get_color_name(rgb_tuple):
+#     try:
+#         # Convert RGB to hex
+#         hex_value = webcolors.rgb_to_hex(rgb_tuple)
+#         # Get the color name directly
+#         return webcolors.hex_to_name(hex_value)
+#     except ValueError:
+#         # If exact match not found, find the closest color
+#         return closest_color(rgb_tuple)
 
 # URL = "https://www.webmd.com/pill-identification/search-results?"
 # URL += "imprint1=" + textOnPill
@@ -90,12 +88,8 @@ def main():
     if image is not None:
         # Detect color
         rgb_tuple = detect_color(image)
-        print(rgb_tuple)
         color = rgb(*rgb_tuple)
-        print(color.hexcode)
-        color = webcolors.hex_to_name(color.hexcode)
-        print(color)  # Output: red
-        print(f"Average Color (RGB): {color}")
+        print(f"Average Color (Hexcode): {color.hexcode}")
 
         # Detect shapes
         shapes = detect_shapes(image)
@@ -103,7 +97,7 @@ def main():
 
         # Detect text
         detected_text = detect_text(image)
-        # # Print detected text
+        # Print detected text
         for (bbox, text, prob) in detected_text:
             print(f"Detected Text: {text}, Confidence: {prob:.2f}")
 
